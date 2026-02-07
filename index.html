@@ -15,7 +15,6 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
             /* Animated Deep Background */
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
@@ -39,11 +38,12 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            overflow: hidden; /* Ensure roses don't spill out */
         }
 
         /* --- Liquid Glass Style (Glassmorphism) --- */
         .glass-card {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.25);
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
@@ -54,7 +54,7 @@
             max-width: 90%;
             width: 400px;
             color: white;
-            z-index: 2;
+            z-index: 10; /* Ensure card is above roses */
             transition: transform 0.3s ease;
         }
 
@@ -85,6 +85,7 @@
             opacity: 0.8;
             font-size: 0.9rem;
             color: white;
+            z-index: 10;
         }
 
         /* --- Image Styling --- */
@@ -108,60 +109,50 @@
             60% {transform: translateY(-5px) translateX(-50%);}
         }
 
-        /* --- Floating Hearts Animation --- */
-        .hearts-container {
+        /* --- FLOATING ROSES ANIMATION --- */
+        .roses-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            overflow: hidden;
+            pointer-events: none; /* Clicks pass through them */
             z-index: 1;
         }
 
-        .heart {
+        .rose {
             position: absolute;
-            bottom: -10vh;
-            background-color: rgba(255, 255, 255, 0.6);
-            display: inline-block;
-            height: 30px;
-            width: 30px;
-            margin: 0 10px;
-            transform: rotate(-45deg);
-            animation: float 6s linear infinite;
+            bottom: -10vh; /* Start below screen */
+            font-size: 2rem; /* Base size of the emoji */
+            opacity: 0.8;
+            animation: floatUp linear infinite;
         }
 
-        .heart:before, .heart:after {
-            content: "";
-            position: absolute;
-            background-color: rgba(255, 255, 255, 0.6);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-        }
-
-        .heart:before { top: -15px; left: 0; }
-        .heart:after { left: 15px; top: 0; }
-
-        /* Randomizing hearts */
-        .heart:nth-child(1) { left: 10%; animation-duration: 8s; width: 20px; height: 20px; opacity: 0.7;}
-        .heart:nth-child(1):before, .heart:nth-child(1):after { width: 20px; height: 20px; top: -10px; left: 0; } 
-        .heart:nth-child(1):after { left: 10px; top: 0; }
-
-        .heart:nth-child(2) { left: 30%; animation-duration: 5s; animation-delay: 1s; background-color: rgba(255, 182, 193, 0.8);}
-        .heart:nth-child(2):before, .heart:nth-child(2):after {background-color: rgba(255, 182, 193, 0.8);}
-
-        .heart:nth-child(3) { left: 70%; animation-duration: 7s; animation-delay: 2s; }
-        .heart:nth-child(4) { left: 50%; animation-duration: 6s; width: 40px; height: 40px; animation-delay: 0.5s; background-color: rgba(255, 0, 80, 0.4);}
-        .heart:nth-child(4):before, .heart:nth-child(4):after { width: 40px; height: 40px; top: -20px; left: 0; background-color: rgba(255, 0, 80, 0.4);} 
-        .heart:nth-child(4):after { left: 20px; top: 0; }
+        /* We use hue-rotate to change the red emoji color */
         
-        .heart:nth-child(5) { left: 85%; animation-duration: 9s; animation-delay: 3s; }
+        /* Rose 1: Standard Red, small, slow */
+        .rose:nth-child(1) { left: 10%; animation-duration: 12s; font-size: 1.5rem; }
 
-        @keyframes float {
-            0% { transform: translateY(0) rotate(-45deg); opacity: 1; }
-            100% { transform: translateY(-120vh) rotate(-45deg); opacity: 0; }
+        /* Rose 2: Purple/Pink tone, medium speed */
+        .rose:nth-child(2) { left: 25%; animation-duration: 9s; animation-delay: 1s; filter: hue-rotate(60deg); font-size: 2rem; }
+
+        /* Rose 3: Yellow/Gold tone, fast, large */
+        .rose:nth-child(3) { left: 50%; animation-duration: 7s; animation-delay: 2s; filter: hue-rotate(140deg); font-size: 2.8rem;}
+
+        /* Rose 4: Deep Pink/Magenta tone, medium speed */
+        .rose:nth-child(4) { left: 75%; animation-duration: 10s; animation-delay: 0.5s; filter: hue-rotate(300deg); font-size: 2.2rem; }
+
+        /* Rose 5: Standard Red, very slow */
+        .rose:nth-child(5) { left: 88%; animation-duration: 15s; animation-delay: 3s; font-size: 1.8rem;}
+        
+        /* Rose 6: Orange tone */
+        .rose:nth-child(6) { left: 40%; animation-duration: 11s; animation-delay: 5s; filter: hue-rotate(90deg); font-size: 1.6rem;}
+
+
+        @keyframes floatUp {
+             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+             10% { opacity: 0.9; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
         }
 
     </style>
@@ -171,7 +162,7 @@
     <div class="container">
         <section>
             <div class="glass-card">
-                <h1>hello...</h1>
+                <h1>Start here...</h1>
                 <p>Scroll down for ❤️</p>
             </div>
             <div class="scroll-indicator">
@@ -188,23 +179,21 @@
         </section>
 
         <section>
-            <div class="hearts-container">
-                <div class="heart"></div>
-                <div class="heart"></div>
-                <div class="heart"></div>
-                <div class="heart"></div>
-                <div class="heart"></div>
+            <div class="roses-container">
+                <div class="rose">🌹</div>
+                <div class="rose">🌹</div>
+                <div class="rose">🌹</div>
+                <div class="rose">🌹</div>
+                <div class="rose">🌹</div>
+                <div class="rose">🌹</div>
             </div>
 
             <div class="glass-card">
-                <img src="1.PNG" alt="Us" class="couple-photo">
-                <p>may our love bloom for times ahead.</p>
+                <img src="1.png" alt="Us" class="couple-photo">
+                <p>may our love bloom for times ahead..</p>
             </div>
         </section>
     </div>
 
 </body>
 </html>
-
-
-
